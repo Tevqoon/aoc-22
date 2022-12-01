@@ -1,14 +1,9 @@
 #lang racket
-
-(define (gather lst [accs null] [acc null])
-  (match lst
-    [(cons #f xs) (gather xs (cons acc accs) null)]
-    [(cons x xs) (gather xs accs (cons x acc))]
-    [null (cons acc accs)]
-    ))
+(require "common.rkt")
 
 (define input (sort (map (curry apply +)
-                         (gather (map string->number (file->lines "../inputs/1.txt"))))
+                         (gather (map string->number
+                                      (file->lines "../inputs/1.txt"))))
                     >))
 
 (writeln (car input))
