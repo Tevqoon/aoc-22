@@ -25,5 +25,13 @@
         (apply aux (cons (apply f (map car xss)) acc) (map cdr xss))))
   (apply aux '() xss))
 
+(define (transpose xss)
+  "Just transpose pepega."
+  (apply map list xss))
+
+(define (zip . lists)
+  "Huh i guess zipping is basically transposing"
+  (apply mapcar list lists))
+
 
 (provide (all-defined-out) cut)
