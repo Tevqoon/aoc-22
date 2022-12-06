@@ -17,4 +17,13 @@
       (call-with-values (λ () (split-at lst n))
                         (λ (hd tl) (slice-up tl n (cons hd acc))))))
 
+(define (mapcar f . xss)
+  "A mufch better mapcar stolen from Muf."
+  (define (aux acc . xss)
+    (if (ormap empty? xss)
+        (reverse acc)
+        (apply aux (cons (apply f (map car xss)) acc) (map cdr xss))))
+  (apply aux '() xss))
+
+
 (provide (all-defined-out) cut)
