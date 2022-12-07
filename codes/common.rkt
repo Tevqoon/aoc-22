@@ -2,11 +2,11 @@
 
 (require srfi/26)
 
-(define (gather lst [accs null] [acc null])
+(define (gather lst [marker #f] [accs null] [acc null])
   "Gathers up the elements of a list into a list of lists, by #f used as marker"
   (match lst
-    [(cons #f xs) (gather xs (cons (reverse acc) accs) null)]
-    [(cons x xs) (gather xs accs (cons x acc))]
+    [(cons x xs) #:when (equal? x marker) (gather marker xs (cons (reverse acc) accs) null)]
+    [(cons x xs) (gather marker xs accs (cons x acc))]
     [null (reverse (cons (reverse acc) accs))]
     ))
 
