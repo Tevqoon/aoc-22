@@ -35,8 +35,8 @@
      (slice-up (map (λ(x) (match x
                             [(list x pos)
                              (if (<= (abs (- (modulo x 40) pos)) 1)
-                                 "#"
-                                 "."
+                                 "█"
+                                 " "
                                  )]))
                     (step input 1 (range 240) 0))
                40)) 
