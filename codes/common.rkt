@@ -33,5 +33,18 @@
   "Huh i guess zipping is basically transposing"
   (apply mapcar list lists))
 
+;; Tuples are assumed to be lists
+
+(define (+. . tuples)
+  (apply map + tuples))
+
+(define (-. . tuples)
+  (apply map - tuples))
+
+(define (*. . tuples)
+  (apply map * tuples))
+
+(define (/. . tuples)
+  (apply map / tuples))
 
 (provide (all-defined-out) cut)
