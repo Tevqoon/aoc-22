@@ -5,8 +5,8 @@
 (define (gather lst [marker #f] [accs null] [acc null])
   "Gathers up the elements of a list into a list of lists, by #f used as marker"
   (match lst
-    [(cons x xs) #:when (equal? x marker) (gather marker xs (cons (reverse acc) accs) null)]
-    [(cons x xs) (gather marker xs accs (cons x acc))]
+    [(cons x xs) #:when (equal? x marker) (gather xs marker (cons (reverse acc) accs) null)]
+    [(cons x xs) (gather xs marker accs (cons x acc))]
     [null (reverse (cons (reverse acc) accs))]
     ))
 
