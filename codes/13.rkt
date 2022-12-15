@@ -10,13 +10,10 @@
 
 (define (check? a b)
   (match (list a b)
-    [(list a b) #:when (andmap number? `(,a ,b))
-                (if (= a b)
-                    'no
-                    (< a b))]
-    [(list '() '()) 'no]
-    [(list '() (cons b bs)) #t]
-    [(list (cons a as) '()) #f]
+    [(list a a) 'no]
+    [(list a b) #:when (andmap number? `(,a ,b)) (< a b)]
+    [(list '() b) #t]
+    [(list a '()) #f]
     [(list (cons a as) (cons b bs)) (let ([checked (check? a b)])
                                       (if (equal? checked 'no)
                                           (check? as bs)
