@@ -9,11 +9,11 @@ sensors = sorted([(abs(x1 - x2) + abs(y1 - y2), x1, y1) for x1, y1, x2, y2 in li
 merge = lambda a,b,c,d : (None, (min(a, c), max(b, d))) if a - 1 <= c <= b + 1 else ((a, b), (c, d))
 
 def add_interval(intervals, new_i, index=0):
-    if new_i[0] > new_i[1]: return
     while index < len(intervals):
+        if new_i[0] > new_i[1]: break
         i1, new_i = merge(*sum(sorted([intervals.pop(index), new_i]), ()))
-        if i1: index, _ = index + 1, intervals.insert(index, i1)
-    intervals.append(new_i)
+        index += (i1 and not intervals.insert(index, i1) and 1) or 0
+    else: intervals.append(new_i)
             
 # Part 1
 rowy = 2000000
