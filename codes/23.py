@@ -1,7 +1,7 @@
 from collections import defaultdict
 
 def process(lines):
-    return {(x, y) : True for x, line in enumerate(lines) for y, point in enumerate(line.rstrip()) if point == "#"}
+    return {(x, y) for x, line in enumerate(lines) for y, point in enumerate(line.rstrip()) if point == "#"}
 
 with open("../inputs/23.txt") as f:
     lines = process(f)
@@ -42,12 +42,12 @@ def printer(board):
 
 def move(board, dir4):
     propositions = defaultdict(lambda : [])
-    new_board = dict()
-    for x,y in board.keys():
-        if len([1 for dx, dy in dir8 if board.get((x + dx, y + dy))]) > 0:
+    new_board = set()
+    for x,y in board:
+        if len([1 for dx, dy in dir8 if (x + dx, y + dy) in board]) > 0:
             for dirs in dir4:
                 for dx, dy in dirs:
-                    if board.get((x + dx, y + dy)):
+                    if (x + dx, y + dy) in board:
                         break
                 else:
                     dx, dy = dirs[0]
@@ -60,19 +60,18 @@ def move(board, dir4):
     #print("Propositions: ", dict(propositions))
     for new, olds in propositions.items():
         if len(olds) == 1:
-            new_board[new] = True
+            new_board.add(new)
         else:
             for old in olds:
-                new_board[old] = True
+                new_board.add(old)
     #print("New board state: ", new_board.keys())
     return new_board, dir4[1:] + dir4[:1]
 
 def boundaries(board):
-    points = board.keys()
-    minx = min(points, key=lambda x: x[0])[0]
-    maxx = max(points, key=lambda x: x[0])[0]
-    miny = min(points, key=lambda x: x[1])[1]
-    maxy = max(points, key=lambda x: x[1])[1]
+    minx = min(board, key=lambda x: x[0])[0]
+    maxx = max(board, key=lambda x: x[0])[0]
+    miny = min(board, key=lambda x: x[1])[1]
+    maxy = max(board, key=lambda x: x[1])[1]
     return((minx, miny), (maxx, maxy))
 
 one = working.copy()
@@ -89,8 +88,6 @@ prev = dict()
 twodirs = dir4.copy()
 index = 0
 while prev != two:
-    if index % 1000 == 0:
-        print(index)
     prev = two
     two, twodirs = move(two, twodirs)
     index += 1
