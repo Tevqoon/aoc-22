@@ -33,3 +33,4 @@
     [a (if (equal? cell "humn") (values 'x identity) (values a #f))]))
 
 (writeln (call-with-values (λ() (solver2 input)) (λ(x f) (f 0))))
+
